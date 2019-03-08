@@ -44,5 +44,3 @@ after_test:
 artifacts:
 - path: src\Database.Versioning\bin\%configuration%
   name: Database.Versioning
-– path: src\Database.Versioning\bin\%configuration%\*.nupkg
-  name: NuGet
