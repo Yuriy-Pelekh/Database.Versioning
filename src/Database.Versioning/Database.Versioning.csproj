@@ -5,11 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
+    <None Remove="Scripts\create.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Scripts\" />
+    <Content Include="Scripts\create.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
   </ItemGroup>
 
 </Project>
