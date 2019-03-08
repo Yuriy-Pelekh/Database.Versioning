@@ -19,5 +19,5 @@ build_script:
 after_build:
 - ps: dotnet publish .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build
 artifacts:
-- path: src\Database.Versioning.sln\bin\%configuration%\netcoreapp2.2\win10-x64\publish
+- path: src\Database.Versioning\bin\%configuration%\netcoreapp2.2\win10-x64\publish
   name: Database.Versioning
