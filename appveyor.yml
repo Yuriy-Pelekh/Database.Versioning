@@ -19,7 +19,7 @@ before_build:
 build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore
 after_build:
-- ps: dotnet pack .\src\Database.Versioning.sln --configuration $env:CONFIGURATION /p:Version={version}
+- ps: dotnet pack .\src\Database.Versioning.sln --configuration $env:CONFIGURATION /p:Version=$env:APPVEYOR_BUILD_VERSION 
 - ps: dotnet publish .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build /p:DebugType=Full
 test_script: 
 - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
