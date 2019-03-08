@@ -1,7 +1,9 @@
 version: 1.0.{build}
 image:
 - Visual Studio 2017
-- Ubuntu1804
+install:
+- choco install opencover.portable
+- choco install codecov
 configuration:
 - Release
 dotnet_csproj:
@@ -17,7 +19,27 @@ before_build:
 build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore
 after_build:
-- ps: dotnet publish .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build
+- ps: dotnet publish .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build /p:DebugType=Full
+test_script: 
+- ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
+after_test:
+- OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx" -filter:"+[*]* -[*.Tests*]*" -oldStyle -output:"TestCoverage.xml"
+- ps: . "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe" -f "TestCoverage.xml"
+- ps: >-
+    Write-Host "Uploading test results"
+
+    $uploadPath = "https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)"
+
+    $testResults = Resolve-Path .\src\Tests\*.Tests\TestResults\*.trx
+
+    Write-Host "Sending $testResults to $uploadPath"
+
+    $wc = New-Object 'System.Net.WebClient'
+
+    Foreach ($testResult in $testResults)
+    {
+        $wc.UploadFile($uploadPath, $testResult)
+    }
 artifacts:
-- path: src\Database.Versioning\bin\Release
+- path: src\Database.Versioning\bin\%configuration%
   name: Database.Versioning
