@@ -1,7 +1,6 @@
 version: 1.0.{build}
 image:
 - Visual Studio 2017
-- Ubuntu1804
 configuration:
 - Release
 dotnet_csproj:
@@ -24,7 +23,7 @@ after_test:
 - ps: >-
     Write-Host "Uploading test results"
     $uploadPath = "https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)"
-    $testResults = Resolve-Path .\Tests\*.Tests\TestResults\*.trx
+    $testResults = Resolve-Path .\src\Tests\*.Tests\TestResults\*.trx
     Write-Host "Sending $testResults to $uploadPath"
     $wc = New-Object 'System.Net.WebClient'
     Foreach ($testResult in $testResults)
@@ -32,5 +31,5 @@ after_test:
         $wc.UploadFile($uploadPath, $testResult)
     }
 artifacts:
-- path: src\Database.Versioning\bin\Release
+- path: src\Database.Versioning\bin\%configuration%
   name: Database.Versioning
