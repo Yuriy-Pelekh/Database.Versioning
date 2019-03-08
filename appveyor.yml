@@ -1,0 +1,23 @@
+version: 1.0.{build}
+image:
+- Visual Studio 2017
+- Ubuntu1804
+configuration:
+- Release
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- ps: dotnet restore .\src\Database.Versioning.sln
+build_script:
+- ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore /p:DebugType=Full
+after_build:
+- ps: dotnet publish .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build
+artifacts:
+- path: src\Database.Versioning.sln\bin\%configuration%\netcoreapp2.2\win10-x64\publish
+  name: Database.Versioning
