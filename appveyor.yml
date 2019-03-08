@@ -20,6 +20,17 @@ after_build:
 - ps: dotnet publish .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build
 test_script: 
 - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
+after_test:
+- ps: >-
+    Write-Host "Uploading test results"
+    $uploadPath = "https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)"
+    $testResults = Resolve-Path .\Tests\*.Tests\TestResults\*.trx
+    Write-Host "Sending $testResults to $uploadPath"
+    $wc = New-Object 'System.Net.WebClient'
+    Foreach ($testResult in $testResults)
+    {
+        $wc.UploadFile($uploadPath, $testResult)
+    }
 artifacts:
 - path: src\Database.Versioning\bin\Release
   name: Database.Versioning
