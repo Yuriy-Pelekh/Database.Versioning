@@ -18,6 +18,8 @@ build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore
 after_build:
 - ps: dotnet publish .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build
+test_script: 
+- ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
 artifacts:
 - path: src\Database.Versioning\bin\Release
   name: Database.Versioning
