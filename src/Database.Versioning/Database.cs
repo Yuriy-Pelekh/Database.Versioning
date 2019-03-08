@@ -9,6 +9,7 @@ namespace Database.Versioning
     public class Database
     {
         private const string SqlCreateFileName = @"Scripts\create.sql";
+        private const string SqlUpdateFileName = @"Scripts\update.sql";
         private readonly string _connectionString;
 
         public Database(string connectionString)
@@ -33,6 +34,14 @@ namespace Database.Versioning
             return executeScalar != DBNull.Value;
         }
 
+        private static int GetVersion(SqlConnection connection)
+        {
+            const string sql = "SELECT MAX([Version]) FROM [Version]";
+            var command = new SqlCommand(sql, connection);
+            var version = command.ExecuteScalar();
+            return Convert.ToInt32(version);
+        }
+
         public void Create(string databaseName)
         {
             var builder = new SqlConnectionStringBuilder(_connectionString) {InitialCatalog = string.Empty};
@@ -41,6 +50,43 @@ namespace Database.Versioning
             {
                 connection.Open();
                 ExecuteScriptFromFile(connection, SqlCreateFileName, new KeyValuePair<string, string>("{database}", databaseName));
+            }
+        }
+
+        public void Update()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                Update(connection);
+            }
+        }
+
+        private void Update(SqlConnection connection)
+        {
+            const string sql = "INSERT INTO [Version] ([Version], [UpdatedDate]) VALUES(@version, GETUTCDATE())";
+            var currentVersion = GetVersion(connection);
+            var script = File.ReadAllText(SqlUpdateFileName);
+            var versions = script.Split(new[] {"--##"}, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var versionScript in versions)
+            {
+                if (versionScript.Trim() != string.Empty)
+                {
+                    var indexOfVersionNumber = versionScript.IndexOf("\r\n", StringComparison.InvariantCulture);
+                    var version = Convert.ToInt32(versionScript.Substring(0, indexOfVersionNumber));
+
+                    if (currentVersion < version)
+                    {
+                        var commandString = versionScript.Substring(indexOfVersionNumber + 2).Trim();
+
+                        ExecuteScript(connection, commandString);
+
+                        var command = new SqlCommand(sql, connection);
+                        command.Parameters.AddWithValue("@version", version);
+                        command.ExecuteNonQuery();
+                    }
+                }
             }
         }
 
@@ -62,14 +108,6 @@ namespace Database.Versioning
             ExecuteScript(connection, script);
         }
 
-        public void ExecuteScript(string script)
-        {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                ExecuteScript(connection, script);
-            }
-        }
-
         protected void ExecuteScript(SqlConnection connection, string script, params SqlParameter[] parameters)
         {
             var commandStrings = Regex.Split(script, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
@@ -84,6 +122,7 @@ namespace Database.Versioning
                         {
                             command.Parameters.AddWithValue(sqlParameter.ParameterName, sqlParameter.Value);
                         }
+
                         command.ExecuteNonQuery();
                     }
                 }

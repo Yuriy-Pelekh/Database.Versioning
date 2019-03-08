@@ -6,10 +6,14 @@
 
   <ItemGroup>
     <None Remove="Scripts\create.sql" />
+    <None Remove="Scripts\update.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Scripts\create.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\update.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
