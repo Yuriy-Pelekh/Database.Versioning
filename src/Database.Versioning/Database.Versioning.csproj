@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Yuriy Pelekh</Authors>
+    <Copyright>Copyright © 2019 Yuriy Pelekh</Copyright>
+    <RepositoryUrl>https://github.com/Yuriy-Pelekh/Database.Versioning</RepositoryUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://yuriy-pelekh.github.io/Database.Versioning/</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags />
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
