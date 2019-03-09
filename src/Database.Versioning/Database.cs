@@ -73,7 +73,7 @@ namespace Database.Versioning
             {
                 if (versionScript.Trim() != string.Empty)
                 {
-                    var indexOfVersionNumber = versionScript.IndexOf("\r\n", StringComparison.InvariantCulture);
+                    var indexOfVersionNumber = versionScript.IndexOf(Environment.NewLine, StringComparison.InvariantCulture);
                     var version = Convert.ToInt32(versionScript.Substring(0, indexOfVersionNumber));
 
                     if (currentVersion < version)
