@@ -17,6 +17,19 @@ namespace Database.Versioning
             _connectionString = connectionString;
         }
 
+        public bool Exists()
+        {
+            var builder = new SqlConnectionStringBuilder(_connectionString);
+            var databaseName = builder.InitialCatalog;
+            builder.InitialCatalog = string.Empty;
+
+            using (var connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                return Exists(connection, databaseName);
+            }
+        }
+
         public bool Exists(string databaseName)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -40,6 +53,19 @@ namespace Database.Versioning
             var command = new SqlCommand(sql, connection);
             var version = command.ExecuteScalar();
             return Convert.ToInt32(version);
+        }
+
+        public void Create()
+        {
+            var builder = new SqlConnectionStringBuilder(_connectionString);
+            var databaseName = builder.InitialCatalog;
+            builder.InitialCatalog = string.Empty;
+
+            using (var connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                ExecuteScriptFromFile(connection, SqlCreateFileName, new KeyValuePair<string, string>("{database}", databaseName));
+            }
         }
 
         public void Create(string databaseName)
