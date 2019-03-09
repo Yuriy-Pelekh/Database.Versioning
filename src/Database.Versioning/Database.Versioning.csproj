@@ -6,12 +6,13 @@
     <Copyright>Copyright © 2019 Yuriy Pelekh</Copyright>
     <RepositoryUrl>https://github.com/Yuriy-Pelekh/Database.Versioning</RepositoryUrl>
     <NeutralLanguage>en</NeutralLanguage>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://yuriy-pelekh.github.io/Database.Versioning/</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags />
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Description>Helps to manage database schema and data versions with SQL scripts.</Description>
   </PropertyGroup>
 
   <ItemGroup>
