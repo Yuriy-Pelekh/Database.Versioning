@@ -94,17 +94,24 @@ namespace Database.Versioning
             var currentVersion = GetVersion(connection);
             var script = File.ReadAllText(SqlUpdateFileName);
             var versions = script.Split(new[] {"--##"}, StringSplitOptions.RemoveEmptyEntries);
+            var lineEnding = Environment.NewLine;
 
             foreach (var versionScript in versions)
             {
                 if (versionScript.Trim() != string.Empty)
                 {
-                    var indexOfVersionNumber = versionScript.IndexOf(Environment.NewLine, StringComparison.InvariantCulture);
+                    var indexOfVersionNumber = versionScript.IndexOf(lineEnding, StringComparison.InvariantCulture);
+                    if (indexOfVersionNumber == -1)
+                    {
+                        lineEnding = "\n";
+                        indexOfVersionNumber = versionScript.IndexOf(lineEnding, StringComparison.InvariantCulture);
+                    }
+
                     var version = Convert.ToInt32(versionScript.Substring(0, indexOfVersionNumber));
 
                     if (currentVersion < version)
                     {
-                        var commandString = versionScript.Substring(indexOfVersionNumber + 2).Trim();
+                        var commandString = versionScript.Substring(indexOfVersionNumber + lineEnding.Length).Trim();
 
                         ExecuteScript(connection, commandString);
 
