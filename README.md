@@ -4,6 +4,4 @@
 
 # Database.Versioning
 
-## Welcome to GitHub Pages
-
 [NuGet](https://www.nuget.org/packages/Database.Versioning/)
