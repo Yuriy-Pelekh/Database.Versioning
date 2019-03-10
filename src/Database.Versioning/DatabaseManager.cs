@@ -6,14 +6,19 @@ using System.Text.RegularExpressions;
 
 namespace Database.Versioning
 {
-    public class Database
+    public class DatabaseManager
     {
         private const string SqlCreateFileName = @"Scripts\create.sql";
         private const string SqlUpdateFileName = @"Scripts\update.sql";
         private readonly string _connectionString;
 
-        public Database(string connectionString)
+        public DatabaseManager(string connectionString)
         {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException("Value cannot be null or empty string", nameof(connectionString));
+            }
+
             _connectionString = connectionString;
         }
 
