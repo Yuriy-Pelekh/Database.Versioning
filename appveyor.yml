@@ -45,6 +45,8 @@ artifacts:
   name: NuGet
 deploy:
 - provider: NuGet
+  on:
+    branch: master
   api_key:
     secure: ustq/EKotcJz//aTTn2BgD8jgEfnVvcWwtXbK0tmkpKvy7SOA9X29C8cscUccuUB
   skip_symbols: true
