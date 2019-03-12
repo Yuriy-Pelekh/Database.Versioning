@@ -9,7 +9,8 @@ It is very easy to use.
 
 ## How to
 After package is installed you will find the new folder called Scripts in the solution. There are two files inside the folder: `create.sql` and `update.sql`. `create.sql` contains script that creates empty database and table with database version information.
-`update.sql` has dummy example how to write version changes. Before running the application go files preferences and change compile type to `Content`.
+`update.sql` has dummy example how to write version changes.
+> Note: Before running the application go to script files preferences and change compile type to `Content`.
 
 ### Rules and suggestions for successful versioning
 - Each version script should start from: `--##23`, where `23` is a version number. Version number is incremental.
@@ -18,7 +19,7 @@ After package is installed you will find the new folder called Scripts in the so
 - You can modify create.sql according to current state of database or remove database creation if you want to start versioning existing database but do not touch `Version` table. It is required to store history of database updates.
 - Clear update.sql before start using it and write your own script following the example.
 
-#### Example
+### Example
 In the application startup on in the installer or whenewer you need you can perform database update like this:
 
 ```
