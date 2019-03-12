@@ -1,8 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/67m0b862xccvismj/branch/master?svg=true)](https://ci.appveyor.com/project/Yuriy-Pelekh/database-versioning/branch/master)
-
 [![codecov](https://codecov.io/gh/Yuriy-Pelekh/Database.Versioning/branch/master/graph/badge.svg)](https://codecov.io/gh/Yuriy-Pelekh/Database.Versioning)
-
-[NuGet](https://www.nuget.org/packages/Database.Versioning/)
+[![NuGet](https://img.shields.io/nuget/v/Database.Versioning.svg)](https://www.nuget.org/packages/Database.Versioning)
+[![NuGet](https://img.shields.io/nuget/dt/Database.Versioning.svg)](https://www.nuget.org/packages/Database.Versioning)
 
 # About
 This project provides very straightforward and elegant way to keep track on database schema and data changes.
