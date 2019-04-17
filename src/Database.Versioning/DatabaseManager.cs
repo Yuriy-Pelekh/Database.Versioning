@@ -8,8 +8,8 @@ namespace Database.Versioning
 {
     public class DatabaseManager
     {
-        private const string SqlCreateFileName = @"Scripts\create.sql";
-        private const string SqlUpdateFileName = @"Scripts\update.sql";
+        private const string SqlCreateFileName = @"Scripts/create.sql";
+        private const string SqlUpdateFileName = @"Scripts/update.sql";
         private readonly string _connectionString;
 
         public DatabaseManager(string connectionString)
