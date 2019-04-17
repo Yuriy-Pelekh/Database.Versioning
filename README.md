@@ -13,7 +13,7 @@ After package is installed you will find the new folder called Scripts in the so
 > Note: Before running the application go to script files preferences and change compile type to `Content`.
 
 ### Rules and suggestions for successful versioning
-- Each version script should start from: `--##99`, where `99` is a version number. Version number is incremental.
+- Each version script should start from: `--##23`, where `23` is a version number. Version number is incremental.
 - It's prohibited to change script in previouse versions in case it was already used in production or by other developers as these changes will not re-apply to those who already has newer version of database. Write required database changes in the next version.
 - New version must have higher number than previouse. Otherwise it will be skipped.
 - You can modify create.sql according to current state of database or remove database creation if you want to start versioning existing database but do not touch `Version` table. It is required to store history of database updates.
