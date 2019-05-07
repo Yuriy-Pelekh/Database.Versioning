@@ -1,4 +1,4 @@
-version: 1.0.38-beta.{build}
+version: 1.0.38.{build}
 image:
 - Visual Studio 2017
 install:
