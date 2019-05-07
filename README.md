@@ -4,8 +4,7 @@
 [![NuGet](https://img.shields.io/nuget/dt/Database.Versioning.svg)](https://www.nuget.org/packages/Database.Versioning)
 
 # About
-This project provides very straightforward and elegant way to keep track on database schema and data changes.
-It is very easy to use.
+This project provides very straightforward and elegant way to keep track on database schema and data changes. There is no need to execute all database scripts each time you are updating a product. This project allows you to run only new scripts without additional efforts.
 
 ## How to
 After package is installed you will find the new folder called Scripts in the solution. There are two files inside the folder: `create.sql` and `update.sql`. `create.sql` contains script that creates empty database and table with database version information.
