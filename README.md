@@ -4,8 +4,7 @@
 [![NuGet](https://img.shields.io/nuget/dt/Database.Versioning.svg)](https://www.nuget.org/packages/Database.Versioning)
 
 # About
-This project provides very straightforward and elegant way to keep track on database schema and data changes.
-It is very easy to use.
+This project provides very straightforward and elegant way to keep track on database schema and data changes. There is no need to execute all database scripts each time you are updating a product. You don't need to re-run all scripts with every update. The project is designed to automatically detect your current version and run only new scripts with no need to re-run all previous. This is a very easy, suitable and fast option that might significantly reduce deployment time, so you don't need to put additional efforts to update your app and can do it quickly without major impact on your customers.
 
 ## How to
 After package is installed you will find the new folder called Scripts in the solution. There are two files inside the folder: `create.sql` and `update.sql`. `create.sql` contains script that creates empty database and table with database version information.
