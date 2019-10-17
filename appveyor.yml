@@ -14,6 +14,12 @@ for:
     - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
     - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src --configuration %configuration% --no-restore --no-build --logger:trx" -filter:"+[*]* -[*.Tests*]*" -oldStyle -output:"TestCoverage.xml"
     - ps: . "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe" -f "TestCoverage.xml"
+-
+  matrix:
+    only:
+      - image: Ubuntu1804
+  test_script: 
+    - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
 configuration:
 - Release
 dotnet_csproj:
