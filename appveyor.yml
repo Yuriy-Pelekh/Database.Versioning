@@ -26,15 +26,13 @@ build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore /p:DebugType=Full
 after_build:
 - ps: dotnet pack .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build /p:Version=$env:APPVEYOR_BUILD_VERSION 
-for:
--
-  matrix:
-    except:
-      - image: Ubuntu1804
-  test_script: 
-    - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
-    - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src --configuration %configuration% --no-restore --no-build --logger:trx" -filter:"+[*]* -[*.Tests*]*" -oldStyle -output:"TestCoverage.xml"
-    - ps: . "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe" -f "TestCoverage.xml"
+matrix:
+  except:
+    - image: Ubuntu1804
+test_script: 
+  - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
+  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src --configuration %configuration% --no-restore --no-build --logger:trx" -filter:"+[*]* -[*.Tests*]*" -oldStyle -output:"TestCoverage.xml"
+  - ps: . "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe" -f "TestCoverage.xml"
 after_test:
 - ps: >-
     Write-Host "Uploading test results"
