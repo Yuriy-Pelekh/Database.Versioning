@@ -1,6 +1,7 @@
 version: 1.0.38.{build}
 image:
-- Visual Studio 2017
+- Previous Visual Studio 2019
+- Previous Ubuntu1804
 install:
 - choco install opencover.portable
 - choco install codecov
