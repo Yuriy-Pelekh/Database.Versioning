@@ -53,7 +53,7 @@ after_test:
         $wc.UploadFile($uploadPath, $testResult)
     }
 artifacts:
-- path: src\Database.Versioning\bin\$(configuration)\*.nupkg
+- path: src\Database.Versioning\bin\**\*.nupkg
   name: NuGet
 deploy:
 - provider: NuGet
