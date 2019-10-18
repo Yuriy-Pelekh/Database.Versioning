@@ -1,9 +1,25 @@
 version: 1.0.38.{build}
 image:
-- Visual Studio 2017
-install:
-- choco install opencover.portable
-- choco install codecov
+- Visual Studio 2019
+- Ubuntu1804
+for:
+-
+  matrix:
+    except:
+      - image: Ubuntu1804
+  install:
+    - choco install opencover.portable
+    - choco install codecov
+  test_script: 
+    - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
+    - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src --configuration %configuration% --no-restore --no-build --logger:trx" -filter:"+[*]* -[*.Tests*]*" -oldStyle -output:"TestCoverage.xml"
+    - ps: . "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe" -f "TestCoverage.xml"
+-
+  matrix:
+    only:
+      - image: Ubuntu1804
+  test_script: 
+    - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
 configuration:
 - Release
 dotnet_csproj:
@@ -20,15 +36,6 @@ build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore /p:DebugType=Full
 after_build:
 - ps: dotnet pack .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build /p:Version=$env:APPVEYOR_BUILD_VERSION 
-for:
--
-  matrix:
-    except:
-      - image: Ubuntu1804
-  test_script: 
-    - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
-    - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src --configuration %configuration% --no-restore --no-build --logger:trx" -filter:"+[*]* -[*.Tests*]*" -oldStyle -output:"TestCoverage.xml"
-    - ps: . "C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe" -f "TestCoverage.xml"
 after_test:
 - ps: >-
     Write-Host "Uploading test results"
@@ -46,7 +53,7 @@ after_test:
         $wc.UploadFile($uploadPath, $testResult)
     }
 artifacts:
-- path: src\Database.Versioning\bin\%configuration%\*.nupkg
+- path: src\Database.Versioning\bin\**\*.nupkg
   name: NuGet
 deploy:
 - provider: NuGet
