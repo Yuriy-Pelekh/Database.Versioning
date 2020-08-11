@@ -4,7 +4,7 @@ environment:
     secure: 7hdKHlNyvrMs7WCTMr2Eaw1nb25MxQTABu/Nux7gyWM=
 image:
 - Visual Studio 2019
-- Ubuntu1804
+#- Ubuntu1804
 for:
 -
   matrix:
@@ -75,7 +75,7 @@ notifications:
   body: >-
     {
       accountName: "Yuriy-Pelekh",
-      projectSlug: "database-versioning"
+      projectSlug: "database-versioning-o0lth"
     }
   on_build_success: true
   on_build_failure: false
