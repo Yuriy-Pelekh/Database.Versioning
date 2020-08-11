@@ -32,6 +32,7 @@ dotnet_csproj:
   informational_version: '{version}'
 before_build:
 - ps: dotnet restore .\src\Database.Versioning.sln
+- ps: echo $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
 build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore /p:DebugType=Full
 after_build:
@@ -73,7 +74,7 @@ notifications:
     {
       accountName: "Yuriy-Pelekh",
       projectSlug: "database-versioning-o0lth",
-      branch: "master"
+      branch: $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
     }
   on_build_success: true
   on_build_failure: false
