@@ -68,7 +68,7 @@ notifications:
   method: POST
   headers:
     Authorization:
-      secure: 7hdKHlNyvrMs7WCTMr2Eaw1nb25MxQTABu/Nux7gyWM=
+      secure: NpBfyorX0aGI2AtnmdjG1DkQYlzi8NnPoMw4QfHsxIE=
   body: >-
     {
       accountName: "Yuriy-Pelekh",
