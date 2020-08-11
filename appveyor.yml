@@ -31,8 +31,8 @@ dotnet_csproj:
   file_version: '{version}'
   informational_version: '{version}'
 before_build:
+- ps: echo "This is a PR for ${Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH} -> ${Env:APPVEYOR_REPO_BRANCH} and will not be deployed."
 - ps: dotnet restore .\src\Database.Versioning.sln
-- ps: echo $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
 build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore /p:DebugType=Full
 after_build:
