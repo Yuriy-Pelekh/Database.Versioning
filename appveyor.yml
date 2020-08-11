@@ -71,7 +71,6 @@ notifications:
   method: POST
   headers:
     Authorization: Bearer %APPVEYOR_TOKEN%
-  timeout: 5
   body: >-
     {
       accountName: "Yuriy-Pelekh",
