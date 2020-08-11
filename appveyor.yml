@@ -75,7 +75,8 @@ notifications:
   body: >-
     {
       accountName: "Yuriy-Pelekh",
-      projectSlug: "database-versioning-o0lth"
+      projectSlug: "database-versioning-o0lth",
+      branch: "master"
     }
   on_build_success: true
   on_build_failure: false
