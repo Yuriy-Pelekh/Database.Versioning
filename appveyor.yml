@@ -1,7 +1,4 @@
 version: 1.0.38.{build}
-environment:
-  APPVEYOR_TOKEN:
-    secure: 7hdKHlNyvrMs7WCTMr2Eaw1nb25MxQTABu/Nux7gyWM=
 image:
 - Visual Studio 2019
 #- Ubuntu1804
@@ -70,7 +67,8 @@ notifications:
   url: https://ci.appveyor.com/api/builds
   method: POST
   headers:
-    Authorization: Bearer %APPVEYOR_TOKEN%
+    Authorization:
+      secure: 7hdKHlNyvrMs7WCTMr2Eaw1nb25MxQTABu/Nux7gyWM=
   body: >-
     {
       accountName: "Yuriy-Pelekh",
