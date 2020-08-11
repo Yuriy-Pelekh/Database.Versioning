@@ -1,4 +1,7 @@
 version: 1.0.38.{build}
+environment:
+  APPVEYOR_TOKEN:
+    secure: 7hdKHlNyvrMs7WCTMr2Eaw1nb25MxQTABu/Nux7gyWM=
 image:
 - Visual Studio 2019
 - Ubuntu1804
@@ -62,3 +65,18 @@ deploy:
   api_key:
     secure: ustq/EKotcJz//aTTn2BgD8jgEfnVvcWwtXbK0tmkpKvy7SOA9X29C8cscUccuUB
   skip_symbols: true
+notifications:
+- provider: Webhook
+  url: https://ci.appveyor.com/api/builds
+  method: POST
+  headers:
+    Authorization: Bearer $Env.APPVEYOR_TOKEN
+  timeout: 5
+  body: >-
+    {
+      accountName: "Yuriy-Pelekh",
+      projectSlug: "database-versioning"
+    }
+  on_build_success: true
+  on_build_failure: false
+  on_build_status_changed: false
