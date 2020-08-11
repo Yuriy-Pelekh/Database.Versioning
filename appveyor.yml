@@ -74,7 +74,7 @@ notifications:
     {
       accountName: "Yuriy-Pelekh",
       projectSlug: "database-versioning",
-      branch: {Env:APPVEYOR_REPO_BRANCH}
+      branch: {{branch}}
     }
   on_build_success: true
   on_build_failure: false
