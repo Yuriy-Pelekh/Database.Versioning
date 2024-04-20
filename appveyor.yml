@@ -5,7 +5,12 @@ image:
 environment:
   DEFAULT_BRANCH: master
 init:
-- ps: if ($env:APPVEYOR_REPO_BRANCH -ne $env:DEFAULT_BRANCH) {Update-AppveyorBuild -Version $env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH}
+- ps: |
+    if ($env:APPVEYOR_REPO_BRANCH -ne $env:DEFAULT_BRANCH) {
+      Update-AppveyorBuild -Version $env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH
+    } elseif ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
+      Update-AppveyorBuild -Version $env:APPVEYOR_BUILD_VERSION-(Get-Date).ToString("yyyyMMdd")
+    } 
 for:
 -
   matrix:
