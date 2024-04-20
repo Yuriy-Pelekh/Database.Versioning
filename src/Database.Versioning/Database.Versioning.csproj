@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Authors>Yuriy Pelekh</Authors>
     <Copyright>Copyright © 2019 Yuriy Pelekh</Copyright>
     <RepositoryUrl>https://github.com/Yuriy-Pelekh/Database.Versioning</RepositoryUrl>
@@ -14,12 +13,10 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>This project provides very straightforward and elegant way to keep track on database schema and data changes. There is no need to execute all database scripts each time you are updating a product. You don't need to re-run all scripts with every update. The project is designed to automatically detect your current version and run only new scripts with no need to re-run all previous. This is a very easy, suitable and fast option that might significantly reduce deployment time, so you don't need to put additional efforts to update your app and can do it quickly without major impact on your customers.</Description>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Scripts\create.sql" />
     <None Remove="Scripts\update.sql" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Scripts\create.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -28,9 +25,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
-
 </Project>
