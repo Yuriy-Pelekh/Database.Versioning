@@ -13,7 +13,7 @@ namespace Database.Versioning.Tests
             Assert.Throws<ArgumentException>(() => new DatabaseManager(" "));
 
             var target = new DatabaseManager("connection string goes here");
-            Assert.IsInstanceOf<DatabaseManager>(target);
+            Assert.That(target, Is.InstanceOf<DatabaseManager>());
         }
 
         [Test, Category(TestCategory.LongRunning), Ignore("Cannot run on CI")]
@@ -22,7 +22,7 @@ namespace Database.Versioning.Tests
             const string connectionString = "Data Source=(local);Integrated Security=True";
             var target = new DatabaseManager(connectionString);
             var databaseExists = target.Exists("Test");
-            Assert.False(databaseExists);
+            Assert.That(databaseExists, Is.False);
         }
 
         [Test, Category(TestCategory.LongRunning), Ignore("Cannot run on CI")]
@@ -32,9 +32,9 @@ namespace Database.Versioning.Tests
             var databaseName = "Test_" + DateTime.UtcNow.Ticks;
 
             var target = new DatabaseManager(connectionString);
-            Assert.False(target.Exists(databaseName));
+            Assert.That(target.Exists(databaseName), Is.False);
             target.Create(databaseName);
-            Assert.True(target.Exists(databaseName));
+            Assert.That(target.Exists(databaseName), Is.True);
 
             connectionString = $"Data Source=(local);Initial Catalog={databaseName};Integrated Security=True";
             target = new DatabaseManager(connectionString);
