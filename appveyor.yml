@@ -2,6 +2,8 @@ version: 1.0.38.{build}
 image:
 - Visual Studio 2022
 - Ubuntu2204
+init:
+- ps: if ($env:APPVEYOR_REPO_BRANCH -ne "master") {Update-AppveyorBuild -Version $env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH}
 for:
 -
   matrix:
@@ -37,17 +39,12 @@ build_script:
 after_build:
 - ps: dotnet pack .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build /p:Version=$env:APPVEYOR_BUILD_VERSION 
 after_test:
-- ps: >-
+- ps: |
     Write-Host "Uploading test results"
-
     $uploadPath = "https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)"
-
     $testResults = Resolve-Path .\src\Tests\*.Tests\TestResults\*.trx
-
     Write-Host "Sending $testResults to $uploadPath"
-
     $wc = New-Object 'System.Net.WebClient'
-
     Foreach ($testResult in $testResults)
     {
         $wc.UploadFile($uploadPath, $testResult)
