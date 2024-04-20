@@ -2,8 +2,10 @@ version: 1.0.38.{build}
 image:
 - Visual Studio 2022
 - Ubuntu2204
+environment:
+  DEFAULT_BRANCH: master
 init:
-- ps: if ($env:APPVEYOR_REPO_BRANCH -ne "master") {Update-AppveyorBuild -Version $env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH}
+- ps: if ($env:APPVEYOR_REPO_BRANCH -ne $env:DEFAULT_BRANCH) {Update-AppveyorBuild -Version $env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH}
 for:
 -
   matrix:
@@ -37,7 +39,10 @@ before_build:
 build_script:
 - ps: dotnet build .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore /p:DebugType=Full
 after_build:
-- ps: dotnet pack .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build /p:Version=$env:APPVEYOR_BUILD_VERSION 
+- ps: |
+    if ($env:APPVEYOR_REPO_BRANCH -eq $env:DEFAULT_BRANCH) {
+      dotnet pack .\src\Database.Versioning.sln --configuration $env:CONFIGURATION --no-restore --no-build /p:Version=$env:APPVEYOR_BUILD_VERSION 
+    }
 after_test:
 - ps: |
     Write-Host "Uploading test results"
@@ -52,6 +57,8 @@ after_test:
 artifacts:
 - path: src\Database.Versioning\bin\**\*.nupkg
   name: NuGet
+- path: src\Database.Versioning\bin\**\*
+  name: zip
 deploy:
 - provider: NuGet
   on:
