@@ -3,7 +3,6 @@ image:
 - Visual Studio 2022
 - Ubuntu2204
 configuration: Release
-platform: Any CPU
 init:
 - pwsh: >-
     if ($env:APPVEYOR_REPO_BRANCH -ne $env:DEFAULT_BRANCH) {
