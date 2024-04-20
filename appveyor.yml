@@ -2,10 +2,10 @@ version: 1.0.38.{build}
 image:
 - Visual Studio 2022
 - Ubuntu2204
-environment:
-  DEFAULT_BRANCH: master
+configuration: Release
+platform: Any CPU
 init:
-- ps: |
+- pwsh: >-
     if ($env:APPVEYOR_REPO_BRANCH -ne $env:DEFAULT_BRANCH) {
       Update-AppveyorBuild -Version $env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH
     } elseif ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
@@ -29,16 +29,17 @@ for:
       - image: Ubuntu2204
   test_script: 
     - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
-configuration:
-- Release
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: '{version}'
+  version_prefix: '{version}'
   package_version: '{version}'
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
+environment:
+  DEFAULT_BRANCH: master
 before_build:
 - ps: dotnet restore .\src\Database.Versioning.sln
 build_script:
