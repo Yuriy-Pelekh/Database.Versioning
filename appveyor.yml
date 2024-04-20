@@ -1,12 +1,12 @@
 version: 1.0.38.{build}
 image:
-- Visual Studio 2019
-- Ubuntu1804
+- Visual Studio 2022
+- Ubuntu2204
 for:
 -
   matrix:
     except:
-      - image: Ubuntu1804
+      - image: Ubuntu2204
   install:
     - choco install opencover.portable
     - choco install codecov
@@ -17,7 +17,7 @@ for:
 -
   matrix:
     only:
-      - image: Ubuntu1804
+      - image: Ubuntu2204
   test_script: 
     - ps: dotnet test .\src\Tests\Database.Versioning.Tests\ --configuration $env:CONFIGURATION --no-restore --no-build --logger:trx
 configuration:
@@ -60,5 +60,5 @@ deploy:
   on:
     branch: master
   api_key:
-    secure: Fzef9alqO36n/EJ6p8LPX4ajWDoeTcbztbDenLNOtmMFEGo2iP5qhJE8Aq7yV0Qd
+    secure: QBVxWj0D8WxUS6/x0rNlx9K8nswZfOdC265Zwzv3VMCPGaVDUzKfkO11bHnfmkoI
   skip_symbols: true
